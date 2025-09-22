@@ -1,0 +1,14 @@
+id_nomeacao;data_submissao;id_nomeador;id_nomeado;id_missao;justificativa;status;caminho_anexo;nomeador;nomeado;missao
+1;2025-09-19;102;101;6;sggwkjw;Aprovado;nan;João;Pedro Lustosa;Conduzir uma Knowledge Session
+2;2025-09-19;103;102;16;qqqq;Aprovado;anexos\2_Certificado.png;Teste;João;Liderar uma Iniciativa de Melhoria
+3;2025-09-19;102;101;13;qqwq2w;Aprovado;anexos\3_Certificado.png;João;Pedro Lustosa;Criar um Template Adotado
+4;2025-09-19;101;104;11;wrhetw rht;Aprovado;anexos\4_Certificado.png;Pedro Lustosa;Thiago;Sugerir Melhoria Simples
+5;2025-09-19;102;104;27;qwqww;Aprovado;anexos\5_C-level.pdf;João;Thiago;Receber Elogio Informal de Cliente
+6;2025-09-19;102;103;13;dedf;Aprovado;anexos\6_Certificado.png;João;Teste;Criar um Template Adotado
+7;2025-09-19;102;103;13;wsgjhwdgjhwg;Aprovado;anexos\7_Certificado.png;João;Teste;Criar um Template Adotado
+8;2025-09-19;102;101;22;awswd;Aprovado;C:\Users\G3NX\Documents\Programa Gems\anexos\8_o_parlamento_do_respeito (1).png;João;Pedro Lustosa;Dar Feedback Construtivo
+9;2025-09-19;105;101;12;wqwq;Aprovado;C:\Users\G3NX\Documents\Programa Gems\anexos\9_image 21.png;Carlos;Pedro Lustosa;Criar um Protótipo (PoC)
+10;2025-09-19;102;106;46;gregteht;Reprovado;C:\Users\G3NX\Documents\Programa Gems\anexos\10_o_parlamento_do_respeito (1).png;João;Teo;Criar Relatório de Alto Impacto
+11;2025-09-19;103;101;22;wdwdw;Aprovado;C:\Users\G3NX\Documents\Programa Gems\anexos\11_image 21.png;Teste;Pedro Lustosa;Dar Feedback Construtivo
+12;2025-09-19;106;107;51;hjgfehjqgfwej;Aprovado;C:\Users\G3NX\Documents\Programa Gems\anexos\12_o_parlamento_do_respeito (1).png;Teo;Leandro;nan
+13;2025-09-19;102;105;35;efwerggrre;Aprovado;C:\Users\G3NX\Documents\Programa Gems\anexos\13_image_21-removebg-preview.png;João;Carlos;nan

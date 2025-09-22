@@ -1,0 +1,52 @@
+id_mission;mission_name;mission_discribe;GemsAwarded;id_pillar;pillar;start_date;update_date
+1;Compartilhar um Insight Relevante;Compartilhar um artigo, vídeo ou estudo com um comentário sobre sua aplicabilidade.;10;1;As Minas do Conhecimento;2025-09-19;2025-09-19
+2;Documentar um Processo;Criar ou atualizar um documento na base de conhecimento que ajude a equipe.;15;1;As Minas do Conhecimento;2025-09-19;2025-09-19
+3;Resumir um Treinamento;Compartilhar aprendizados de um curso ou webinar com a equipe.;20;1;As Minas do Conhecimento;2025-09-19;2025-09-19
+4;Criar Material de Onboarding;Desenvolver guia ou checklist para integração de novos membros.;25;1;As Minas do Conhecimento;2025-09-19;2025-09-19
+5;Ser Mentor de um Aprendiz;Atuar como mentor formal por pelo menos um mês.;35;1;As Minas do Conhecimento;2025-09-19;2025-09-19
+6;Conduzir uma Knowledge Session;Apresentar workshop ou treinamento interno.;40;1;As Minas do Conhecimento;2025-09-19;2025-09-19
+7;Trazer Conhecimento Externo;Participar de evento externo e compartilhar insights com liderança.;50;1;As Minas do Conhecimento;2025-09-19;2025-09-19
+8;Obter Certificação Profissional;Conquistar certificação relevante para a área e empresa.;70;1;As Minas do Conhecimento;2025-09-19;2025-09-19
+9;Publicar um Artigo ou Estudo de Caso;Escrever artigo para blog ou estudo de caso de projeto de sucesso.;80;1;As Minas do Conhecimento;2025-09-19;2025-09-19
+10;Criar uma Trilha de Conhecimento;Desenvolver um currículo completo sobre ferramenta ou metodologia.;100;1;As Minas do Conhecimento;2025-09-19;2025-09-19
+11;Sugerir Melhoria Simples;Propor pequena mudança que traga ganho de tempo ou clareza.;10;2;A Forja da Inovação;2025-09-19;2025-09-19
+12;Criar um Protótipo (PoC);Desenvolver PoC para validar nova ideia ou tecnologia.;25;2;A Forja da Inovação;2025-09-19;2025-09-19
+13;Criar um Template Adotado;Desenvolver template adotado oficialmente pela equipe.;30;2;A Forja da Inovação;2025-09-19;2025-09-19
+14;Automatizar uma Tarefa Repetitiva;Criar script ou fluxo que automatize tarefas com impacto validado.;40;2;A Forja da Inovação;2025-09-19;2025-09-19
+15;Otimizar um Recurso Existente;Melhorar dashboard, código ou processo com ganho de performance >20%.;45;2;A Forja da Inovação;2025-09-19;2025-09-19
+16;Liderar uma Iniciativa de Melhoria;Conduzir projeto ou força-tarefa para resolver problema interno.;50;2;A Forja da Inovação;2025-09-19;2025-09-19
+17;Introduzir uma Nova Ferramenta;Pesquisar, testar e implantar ferramenta adotada pela equipe.;60;2;A Forja da Inovação;2025-09-19;2025-09-19
+18;Desenvolver uma Solução Inovadora;Liderar solução inovadora com resultado mensurável.;75;2;A Forja da Inovação;2025-09-19;2025-09-19
+19;Receber Reconhecimento por Inovação;Ser elogiado formalmente por solução criativa.;85;2;A Forja da Inovação;2025-09-19;2025-09-19
+20;Gerar uma Propriedade Intelectual;Contribuir para criação de ativo registrável (patente, software, etc.).;100;2;A Forja da Inovação;2025-09-19;2025-09-19
+21;Ajudar Colega Proativamente;Ajudar colega sem ser solicitado.;10;3;A Taverna da Cordialidade;2025-09-19;2025-09-19
+22;Dar Feedback Construtivo;Oferecer feedback estruturado e empático.;15;3;A Taverna da Cordialidade;2025-09-19;2025-09-19
+23;Promover Ação de Integração;Organizar evento social para fortalecer equipe.;20;3;A Taverna da Cordialidade;2025-09-19;2025-09-19
+24;Participar de Ação Voluntária;Engajar-se em campanha voluntária da empresa.;25;3;A Taverna da Cordialidade;2025-09-19;2025-09-19
+25;Mediar Conversa Difícil;Ajudar a mediar conversa promovendo escuta e solução.;30;3;A Taverna da Cordialidade;2025-09-19;2025-09-19
+26;Conectar Pessoas Estrategicamente;Conectar colegas de diferentes áreas para colaboração.;35;3;A Taverna da Cordialidade;2025-09-19;2025-09-19
+27;Receber Elogio Informal de Cliente;Ser mencionado positivamente por cliente em e-mail ou reunião.;40;3;A Taverna da Cordialidade;2025-09-19;2025-09-19
+28;Reconhecer um Colega Publicamente;Fazer reconhecimento público detalhado em reunião.;50;3;A Taverna da Cordialidade;2025-09-19;2025-09-19
+29;Receber Elogio Formal de Cliente;Receber e-mail formal de cliente elogiando cordialidade.;60;3;A Taverna da Cordialidade;2025-09-19;2025-09-19
+30;Reverter Situação de Crise com Cliente;Reverter insatisfação de cliente com comunicação e empatia.;80;3;A Taverna da Cordialidade;2025-09-19;2025-09-19
+31;Garantir que Todos Falem;Garantir que todos expressem opiniões em reunião.;15;5;O Parlamento do Respeito;2025-09-19;2025-09-19
+32;Acolher um Novo Colaborador;"Ser o ""anjo"" de novo membro na primeira semana.";20;5;O Parlamento do Respeito;2025-09-19;2025-09-19
+33;Promover Diálogo sobre D&I;Iniciar ou contribuir em discussão sobre Diversidade e Inclusão.;30;5;O Parlamento do Respeito;2025-09-19;2025-09-19
+34;Mediar um Conflito com Empatia;Mediar conflito focando no respeito e entendimento.;35;5;O Parlamento do Respeito;2025-09-19;2025-09-19
+35;Denunciar Comportamento Inadequado;Utilizar canais éticos para relatar comportamento indevido.;50;5;O Parlamento do Respeito;2025-09-19;2025-09-19
+36;Intervir em Prol da Segurança Psicológica;Intervir respeitosamente em situação prejudicial.;60;5;O Parlamento do Respeito;2025-09-19;2025-09-19
+37;Ser um Ponto Focal de Confiança;Ser reconhecido como referência de apoio pela equipe.;70;5;O Parlamento do Respeito;2025-09-19;2025-09-19
+38;Reestruturar Processo para Inclusão;Liderar mudança para tornar processo mais justo e inclusivo.;75;5;O Parlamento do Respeito;2025-09-19;2025-09-19
+39;Receber Feedback por Integridade;Ser elogiado por decisão ética sob pressão.;80;5;O Parlamento do Respeito;2025-09-19;2025-09-19
+40;Liderar Iniciativa de D&I;Criar e liderar projeto sobre Diversidade e Inclusão.;90;5;O Parlamento do Respeito;2025-09-19;2025-09-19
+41;Entregar com Excelência Antes do Prazo;Concluir tarefa importante com qualidade antes do prazo.;20;4;Os Picos da Entrega Extraordinária;2025-09-19;2025-09-19
+42;Identificar Risco Não Mapeado;Apontar risco não previsto e propor solução.;25;4;Os Picos da Entrega Extraordinária;2025-09-19;2025-09-19
+43;Assumir Responsabilidade Extra;Voluntariar-se para responsabilidade adicional em projeto crítico.;35;4;Os Picos da Entrega Extraordinária;2025-09-19;2025-09-19
+44;Resolver Problema Complexo Fora do Escopo;Resolver problema fora do escopo inicial que impactava o projeto.;45;4;Os Picos da Entrega Extraordinária;2025-09-19;2025-09-19
+45;Entregar Valor em Situação de Crise;Manter performance e entregar valor em situação adversa.;50;4;Os Picos da Entrega Extraordinária;2025-09-19;2025-09-19
+46;Criar Relatório de Alto Impacto;Gerar insight que muda direção de projeto ou decisão.;60;4;Os Picos da Entrega Extraordinária;2025-09-19;2025-09-19
+47;Elogio Espontâneo da Liderança;Ser elogiado por diretor ou C-level por entrega excepcional.;70;4;Os Picos da Entrega Extraordinária;2025-09-19;2025-09-19
+48;Liderar Recuperação de Projeto;Assumir papel principal na recuperação de projeto em risco.;80;4;Os Picos da Entrega Extraordinária;2025-09-19;2025-09-19
+49;Elogio Formal por Impacto no Negócio;Reconhecimento formal por entrega que gerou impacto mensurável.;90;4;Os Picos da Entrega Extraordinária;2025-09-19;2025-09-19
+50;Superar Meta em >25%;Superar meta principal do projeto em mais de 25%.;100;4;Os Picos da Entrega Extraordinária;2025-09-19;2025-09-19
+51;Teste;wdwdwq;100;2;A Forja da Inovação;2025-09-19;2025-09-19
