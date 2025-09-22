@@ -16,4 +16,5 @@ id_nomeacao;data_submissao;id_nomeador;id_nomeado;id_missao;justificativa;status
 15;2025-09-22;101;108;22;eeee;Aprovado;anexos\15_image 21.png;Pedro Lustosa;Juliana Campiolo;nan
 16;2025-09-22;101;105;13;wdewe;Aprovado;anexos\16_Certificado.png;Pedro Lustosa;Carlos;nan
 17;2025-09-22;104;103;23;ffhger;Aprovado;anexos\17_Certificado.png;Thiago;Teste;nan
-18;2025-09-22;104;105;33;dwdw;Pendente;anexos\18_C-level.pdf;;;
+18;2025-09-22;104;105;33;dwdw;Aprovado;anexos\18_C-level.pdf;Thiago;Carlos;nan
+19;2025-09-22;104;108;45;tert6t;Aprovado;anexos\19_Fundo Padrão - 3 de 3 (2).png;Thiago;Juliana Campiolo;nan
