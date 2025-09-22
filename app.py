@@ -304,16 +304,21 @@ def create_custom_header(title, subtitle="", icon="💎"):
     """, unsafe_allow_html=True)
 
 def get_pillar_image(pillar_name):
-    """Busca a imagem do pilar baseada no nome"""
-    if not pillar_name or pd.isna(pillar_name):
-        return None
+  """Busca a imagem do pilar baseada no nome"""
+  if not pillar_name or pd.isna(pillar_name):
+      return None
 
-    image_filename = f"{pillar_name.strip().lower().replace(' ', '_')}.png"
-    image_path = BASE_DIR / image_filename
+  image_filename = f"{pillar_name.strip().lower().replace(' ', '_')}.png"
+  # --- CORREÇÃO APLICADA AQUI ---
+  # O caminho agora aponta para a subpasta correta: assets/pillar_icons/
+  image_path = BASE_DIR / "assets" / "pillar_icons" / image_filename
 
-    if image_path.exists():
-        return str(image_path)
-    return None
+  if image_path.exists():
+      return str(image_path)
+  else:
+      # Adicionado um log para facilitar a depuração caso uma imagem específica não seja encontrada
+      logger.warning(f"Ícone do pilar não encontrado: {image_path}")
+  return None
 
 def display_pillar_icon(pillar_name, size="40px"):
     """Exibe o ícone do pilar"""
