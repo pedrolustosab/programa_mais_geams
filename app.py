@@ -1,3 +1,6 @@
+# Seu código main.py continua o mesmo, pois a correção
+# é aplicada através da função apply_custom_styles()
+
 import streamlit as st
 import sys
 from pathlib import Path
@@ -16,7 +19,7 @@ from pages import (
 def main():
     # Configuração inicial
     setup_page_config()
-    apply_custom_styles()
+    apply_custom_styles()  # Esta função agora oculta a navegação superior
     initialize_session_state()
     
     # Sidebar de navegação
@@ -48,8 +51,8 @@ def create_navigation_sidebar():
     
     # Criar botões de navegação
     for name, (icon, _, needs_admin) in PAGES.items():
-        if not needs_admin or st.session_state.is_admin:
-            button_type = "primary" if st.session_state.current_page == name else "secondary"
+        if not needs_admin or st.session_state.get('is_admin', False):
+            button_type = "primary" if st.session_state.get('current_page', 'Home') == name else "secondary"
             
             if st.sidebar.button(f"{icon} {name}", use_container_width=True, type=button_type):
                 st.session_state.current_page = name

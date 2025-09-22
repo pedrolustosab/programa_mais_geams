@@ -29,6 +29,20 @@ DEBUG = os.getenv("DEBUG", "false").lower() == "true"
 PRIMARY_COLOR = os.getenv("STREAMLIT_THEME_PRIMARY_COLOR", "#6B7E7D")
 BACKGROUND_COLOR = os.getenv("STREAMLIT_THEME_BACKGROUND_COLOR", "#FFFFFF")
 
+def apply_custom_styles():
+    # Seu CSS customizado existente pode vir aqui
+    
+    # CSS para ocultar o cabeçalho, o menu e a navegação de páginas
+    hide_elements_style = """
+        <style>
+        #MainMenu {visibility: hidden;}
+        header {visibility: hidden;}
+        /* Oculta a barra de navegação de múltiplas páginas gerada pelo Streamlit */
+        div[data-testid="stSidebarNav"] {display: none;}
+        </style>
+    """
+    st.markdown(hide_elements_style, unsafe_allow_html=True)
+
 # Configuração de logging
 def setup_logging():
     log_level = os.getenv("LOG_LEVEL", "INFO")
