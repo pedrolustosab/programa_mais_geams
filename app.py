@@ -5,27 +5,35 @@ import time
 from pathlib import Path
 import plotly.express as px
 import plotly.graph_objects as go
+import os
+from dotenv import load_dotenv
+
+# --- CARREGAR VARIÁVEIS DE AMBIENTE ---
+load_dotenv()
 
 # --- 1. CONFIGURAÇÃO DA PÁGINA E TEMA APRIMORADO ---
 st.set_page_config(
-    page_title="Programa +GEMS",
+    page_title=os.getenv("APP_TITLE", "Programa +GEMS"),
     page_icon="💎",
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
-        'About': "# Programa +GEMS\n*Forje sua lenda, Herói!*"
+        'About': f"# {os.getenv('APP_TITLE', 'Programa +GEMS')}\n*{os.getenv('APP_DESCRIPTION', 'Forje sua lenda, Herói!')}*"
     }
 )
 
 # --- 2. ESTILIZAÇÃO COM PALETA CLEAN ---
-st.markdown("""
+primary_color = os.getenv("STREAMLIT_THEME_PRIMARY_COLOR", "#6B7E7D")
+background_color = os.getenv("STREAMLIT_THEME_BACKGROUND_COLOR", "#FFFFFF")
+
+st.markdown(f"""
 <style>
     /* Importar fonte do Google */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    
+
     /* Paleta Clean */
-    :root {
-        --primary-color: #6B7E7D;        /* Verde acinzentado */
+    :root {{
+        --primary-color: {primary_color};        /* Verde acinzentado */
         --secondary-color: #A8A8A8;      /* Cinza claro */
         --accent-color: #D4A574;         /* Salmão suave */
         --highlight-color: #B07A57;      /* Marrom suave */
@@ -35,20 +43,20 @@ st.markdown("""
         --text-primary: #2F3E46;
         --text-secondary: #52796F;
         --background-light: #F8F9FA;
-        --background-card: #FFFFFF;
+        --background-card: {background_color};
         --border-color: #E8EFEE;
         --shadow: 0 2px 8px rgba(107, 126, 125, 0.08);
         --shadow-hover: 0 4px 16px rgba(107, 126, 125, 0.12);
         --border-radius: 12px;
-    }
+    }}
 
     /* Fonte global */
-    .main * {
+    .main * {{
         font-family: 'Inter', sans-serif !important;
-    }
+    }}
 
     /* Header personalizado */
-    .custom-header {
+    .custom-header {{
         background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         color: white;
         padding: 2rem 1.5rem;
@@ -56,10 +64,10 @@ st.markdown("""
         margin-bottom: 2rem;
         text-align: center;
         box-shadow: var(--shadow);
-    }
+    }}
 
     /* Cards de KPI clean */
-    div[data-testid="stMetric"] {
+    div[data-testid="stMetric"] {{
         background: var(--background-card);
         border: 1px solid var(--border-color);
         border-radius: var(--border-radius);
@@ -68,15 +76,15 @@ st.markdown("""
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
-    }
+    }}
 
-    div[data-testid="stMetric"]:hover {
+    div[data-testid="stMetric"]:hover {{
         transform: translateY(-2px);
         box-shadow: var(--shadow-hover);
         border-color: var(--primary-color);
-    }
+    }}
 
-    div[data-testid="stMetric"]::before {
+    div[data-testid="stMetric"]::before {{
         content: '';
         position: absolute;
         top: 0;
@@ -84,10 +92,10 @@ st.markdown("""
         right: 0;
         height: 3px;
         background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-    }
+    }}
 
     /* Botões clean */
-    .stButton > button[kind="primary"] {
+    .stButton > button[kind="primary"] {{
         background: var(--primary-color);
         color: white;
         border: none;
@@ -96,40 +104,40 @@ st.markdown("""
         padding: 0.75rem 1.5rem;
         transition: all 0.3s ease;
         box-shadow: var(--shadow);
-    }
+    }}
 
-    .stButton > button[kind="primary"]:hover {
+    .stButton > button[kind="primary"]:hover {{
         background: var(--highlight-color);
         transform: translateY(-1px);
         box-shadow: var(--shadow-hover);
-    }
+    }}
 
-    .stButton > button[kind="secondary"] {
+    .stButton > button[kind="secondary"] {{
         background: var(--background-card);
         color: var(--error-color);
         border: 1px solid var(--error-color);
         border-radius: var(--border-radius);
         font-weight: 500;
         transition: all 0.3s ease;
-    }
+    }}
 
-    .stButton > button[kind="secondary"]:hover {
+    .stButton > button[kind="secondary"]:hover {{
         background: var(--error-color);
         color: white;
         transform: translateY(-1px);
-    }
+    }}
 
     /* Containers clean */
-    .stContainer {
+    .stContainer {{
         border-radius: var(--border-radius);
         box-shadow: var(--shadow);
         border: 1px solid var(--border-color);
         transition: all 0.3s ease;
         background: var(--background-card);
-    }
+    }}
 
     /* Feed item com imagem */
-    .feed-item {
+    .feed-item {{
         background: var(--background-card);
         border: 1px solid var(--border-color);
         border-radius: var(--border-radius);
@@ -139,34 +147,34 @@ st.markdown("""
         display: flex;
         align-items: center;
         gap: 0.75rem;
-    }
+    }}
 
-    .feed-item:hover {
+    .feed-item:hover {{
         transform: translateX(4px);
         box-shadow: var(--shadow);
         border-color: var(--primary-color);
-    }
+    }}
 
-    .pillar-icon {
+    .pillar-icon {{
         width: 40px;
         height: 40px;
         border-radius: 8px;
         object-fit: cover;
         flex-shrink: 0;
-    }
+    }}
 
     /* Progress bars clean */
-    .stProgress > div > div > div {
+    .stProgress > div > div > div {{
         background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
         border-radius: 6px;
-    }
+    }}
 
     /* Sidebar clean */
-    .css-1d391kg {
+    .css-1d391kg {{
         background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
-    }
+    }}
 
-    .css-1d391kg .stButton > button {
+    .css-1d391kg .stButton > button {{
         background: transparent;
         color: white;
         border: 1px solid transparent;
@@ -174,49 +182,49 @@ st.markdown("""
         margin-bottom: 0.5rem;
         transition: all 0.3s ease;
         font-weight: 500;
-    }
+    }}
 
-    .css-1d391kg .stButton > button:hover {
+    .css-1d391kg .stButton > button:hover {{
         background: rgba(255, 255, 255, 0.1);
         border-color: var(--accent-color);
         transform: translateX(4px);
-    }
+    }}
 
     /* Formulários clean */
     .stTextInput > div > div > input,
     .stTextArea > div > div > textarea,
-    .stSelectbox > div > div > select {
+    .stSelectbox > div > div > select {{
         border-radius: var(--border-radius);
         border: 1px solid var(--border-color);
         transition: all 0.3s ease;
-    }
+    }}
 
     .stTextInput > div > div > input:focus,
     .stTextArea > div > div > textarea:focus,
-    .stSelectbox > div > div > select:focus {
+    .stSelectbox > div > div > select:focus {{
         border-color: var(--primary-color);
         box-shadow: 0 0 0 2px rgba(107, 126, 125, 0.1);
-    }
+    }}
 
     /* Tabs clean */
-    .stTabs [data-baseweb="tab-list"] {
+    .stTabs [data-baseweb="tab-list"] {{
         gap: 8px;
-    }
+    }}
 
-    .stTabs [data-baseweb="tab"] {
+    .stTabs [data-baseweb="tab"] {{
         background: var(--background-light);
         border-radius: var(--border-radius);
         color: var(--text-secondary);
         font-weight: 500;
-    }
+    }}
 
-    .stTabs [aria-selected="true"] {
+    .stTabs [aria-selected="true"] {{
         background: var(--primary-color);
         color: white;
-    }
+    }}
 
     /* Mission card */
-    .mission-card {
+    .mission-card {{
         display: flex;
         align-items: center;
         gap: 1rem;
@@ -226,35 +234,66 @@ st.markdown("""
         border-radius: var(--border-radius);
         margin-bottom: 0.5rem;
         transition: all 0.3s ease;
-    }
+    }}
 
-    .mission-card:hover {
+    .mission-card:hover {{
         border-color: var(--primary-color);
         box-shadow: var(--shadow);
-    }
+    }}
 
     /* Responsividade */
-    @media (max-width: 768px) {
-        .custom-header {
+    @media (max-width: 768px) {{
+        .custom-header {{
             padding: 1rem;
-        }
-    }
+        }}
+    }}
 </style>
 """, unsafe_allow_html=True)
 
 # --- 3. CONSTANTES E INICIALIZAÇÃO DO AMBIENTE ---
 BASE_DIR = Path(__file__).resolve().parent
-ANEXOS_DIR = BASE_DIR / "anexos"
+DATA_PATH = Path(os.getenv("DATA_PATH", str(BASE_DIR)))
+ANEXOS_DIR = Path(os.getenv("ANEXOS_PATH", str(BASE_DIR / "anexos")))
 ANEXOS_DIR.mkdir(exist_ok=True)
+DATA_PATH.mkdir(exist_ok=True)
 
 DATA_FILES = {
-    "hero": {"path": BASE_DIR / "dim_hero.csv", "cols": ['id_hero', 'hero_name', 'hero_team', 'start_date', 'update_date']},
-    "map": {"path": BASE_DIR / "dim_map.csv", "cols": ['id_mission', 'mission_name', 'mission_discribe', 'GemsAwarded', 'id_pillar', 'pillar', 'start_date', 'update_date']},
-    "nomination": {"path": BASE_DIR / "fact_nomeacao.csv", "cols": ['id_nomeacao', 'data_submissao', 'id_nomeador', 'id_nomeado', 'id_missao', 'justificativa', 'status', 'caminho_anexo']},
+    "hero": {
+        "path": DATA_PATH / "dim_hero.csv", 
+        "cols": ['id_hero', 'hero_name', 'hero_team', 'start_date', 'update_date']
+    },
+    "map": {
+        "path": DATA_PATH / "dim_map.csv", 
+        "cols": ['id_mission', 'mission_name', 'mission_discribe', 'GemsAwarded', 'id_pillar', 'pillar', 'start_date', 'update_date']
+    },
+    "nomination": {
+        "path": DATA_PATH / "fact_nomeacao.csv", 
+        "cols": ['id_nomeacao', 'data_submissao', 'id_nomeador', 'id_nomeado', 'id_missao', 'justificativa', 'status', 'caminho_anexo']
+    },
 }
-ADMIN_PASSWORD = "admin"
 
-# --- 4. COMPONENTES UI APRIMORADOS ---
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin")
+CACHE_TTL = int(os.getenv("CACHE_TTL", "300"))
+DEBUG = os.getenv("DEBUG", "false").lower() == "true"
+
+# --- 4. LOGGING (OPCIONAL) ---
+import logging
+
+log_level = os.getenv("LOG_LEVEL", "INFO")
+log_file = os.getenv("LOG_FILE", "gems_program.log")
+
+logging.basicConfig(
+    level=getattr(logging, log_level),
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(log_file),
+        logging.StreamHandler()
+    ] if DEBUG else [logging.FileHandler(log_file)]
+)
+
+logger = logging.getLogger(__name__)
+
+# --- 5. COMPONENTES UI APRIMORADOS ---
 def create_custom_header(title, subtitle="", icon="💎"):
     """Cria um header customizado e atraente"""
     st.markdown(f"""
@@ -268,10 +307,10 @@ def get_pillar_image(pillar_name):
     """Busca a imagem do pilar baseada no nome"""
     if not pillar_name or pd.isna(pillar_name):
         return None
-    
+
     image_filename = f"{pillar_name.strip().lower().replace(' ', '_')}.png"
     image_path = BASE_DIR / image_filename
-    
+
     if image_path.exists():
         return str(image_path)
     return None
@@ -290,7 +329,8 @@ def get_image_base64(image_path):
     try:
         with open(image_path, "rb") as img_file:
             return base64.b64encode(img_file.read()).decode()
-    except:
+    except Exception as e:
+        logger.error(f"Erro ao converter imagem para base64: {e}")
         return ""
 
 def show_loading_message(message="Processando..."):
@@ -304,24 +344,30 @@ def create_success_animation():
     st.balloons()
     time.sleep(1)
 
-# --- 5. FUNÇÕES DE LÓGICA DE DADOS OTIMIZADAS ---
-@st.cache_data(ttl=300)
+# --- 6. FUNÇÕES DE LÓGICA DE DADOS OTIMIZADAS ---
+@st.cache_data(ttl=CACHE_TTL)
 def load_data(file_key):
     config = DATA_FILES.get(file_key)
     file_path, columns = config["path"], config["cols"]
+    
     if not file_path.exists():
+        logger.info(f"Criando arquivo {file_path.name}")
         df = pd.DataFrame(columns=columns)
         df.to_csv(file_path, index=False, sep=';')
         return df
+    
     try:
         df = pd.read_csv(file_path, sep=';', dtype=str)
         for col in columns:
             if col not in df.columns:
                 df[col] = pd.NA
+        logger.debug(f"Dados carregados de {file_path.name}: {len(df)} registros")
         return df.astype(str)
     except (pd.errors.EmptyDataError, FileNotFoundError):
+        logger.warning(f"Arquivo {file_path.name} vazio ou não encontrado")
         return pd.DataFrame(columns=columns)
     except Exception as e:
+        logger.error(f"Erro crítico ao carregar {file_path.name}: {e}")
         st.error(f"Erro crítico ao carregar {file_path.name}: {e}")
         return pd.DataFrame(columns=columns)
 
@@ -330,12 +376,14 @@ def save_data(file_key, df):
     try:
         df.to_csv(file_path, index=False, sep=';')
         st.cache_data.clear()
+        logger.info(f"Dados salvos em {file_path.name}: {len(df)} registros")
         return True
     except Exception as e:
+        logger.error(f"Falha ao salvar dados em {file_path.name}: {e}")
         st.error(f"Falha ao salvar dados em {file_path.name}: {e}")
         return False
 
-@st.cache_data(ttl=300)
+@st.cache_data(ttl=CACHE_TTL)
 def get_dashboard_data():
     """Prepara dados para o dashboard com melhor performance"""
     df_heroes = load_data('hero')
@@ -363,24 +411,33 @@ def get_dashboard_data():
         'pillar', 'GemsAwarded', 'justificativa'
     ]]
 
-# --- 6. PÁGINAS PRINCIPAIS ---
+# --- 7. PÁGINAS PRINCIPAIS ---
 def pagina_home():
+    app_title = os.getenv("APP_TITLE", "Programa +GEMS")
+    app_description = os.getenv("APP_DESCRIPTION", "Forje sua lenda, Herói! Acumule GEMS e escreva seu nome no Salão dos Heróis.")
+    
     create_custom_header(
-        "Bem-vindo ao Programa +GEMS!",
-        "Forje sua lenda, Herói! Acumule GEMS e escreva seu nome no Salão dos Heróis.",
+        f"Bem-vindo ao {app_title}!",
+        app_description,
         "💎"
     )
-    
+
     col1, col2 = st.columns([1, 1.5], gap="large")
-    
+
     with col1:
-        st.image("Capa.png", use_container_width=True)
-    
+        # Verificar se a imagem existe
+        capa_path = BASE_DIR / "Capa.png"
+        if capa_path.exists():
+            st.image(str(capa_path), use_container_width=True)
+        else:
+            st.markdown("### 💎 **Programa +GEMS**")
+            st.info("📸 Adicione uma imagem 'Capa.png' na raiz do projeto para exibir aqui.")
+
     with col2:
         st.markdown("### 🚀 **Como começar sua jornada?**")
-        
+
         tabs = st.tabs(["📍 Explorar", "🏆 Reconhecer", "📊 Acompanhar"])
-        
+
         with tabs[0]:
             st.markdown("""
             **🗺️ Mapa dos Cristais**
@@ -391,7 +448,7 @@ def pagina_home():
             if st.button("Ir para o Mapa 🗺️", use_container_width=True):
                 st.session_state.current_page = "Mapa dos Cristais"
                 st.rerun()
-        
+
         with tabs[1]:
             st.markdown("""
             **📜 Pergaminho de Nomeações**
@@ -402,7 +459,7 @@ def pagina_home():
             if st.button("Fazer Nomeação 📜", use_container_width=True):
                 st.session_state.current_page = "Pergaminho de Nomeações"
                 st.rerun()
-        
+
         with tabs[2]:
             st.markdown("""
             **⚔️ Salão dos Heróis**
@@ -435,9 +492,9 @@ def pagina_salao_dos_herois():
     # --- FILTROS APRIMORADOS ---
     with st.container():
         st.markdown("### 🔍 **Filtros do Reino**")
-        
+
         col1, col2, col3, col4 = st.columns(4)
-        
+
         with col1:
             min_date = df['data_submissao'].min().date()
             max_date = df['data_submissao'].max().date()
@@ -447,15 +504,15 @@ def pagina_salao_dos_herois():
                 min_value=min_date,
                 max_value=max_date
             )
-        
+
         with col2:
             all_heroes = sorted(df['Herói'].unique())
             selected_heroes = st.multiselect("🛡️ Heróis", all_heroes, default=all_heroes)
-        
+
         with col3:
             all_pillars = sorted(df['pillar'].unique())
             selected_pillars = st.multiselect("🏛️ Pilares", all_pillars, default=all_pillars)
-        
+
         with col4:
             all_teams = sorted(df['Time'].unique())
             selected_teams = st.multiselect("👥 Times", all_teams, default=all_teams)
@@ -480,14 +537,14 @@ def pagina_salao_dos_herois():
 
     # --- KPIS APRIMORADOS ---
     st.markdown("### 📊 **Métricas do Reino**")
-    
+
     total_heroes = filtered_df['Herói'].nunique()
     total_gems = int(filtered_df['GemsAwarded'].sum())
     avg_gems = int(total_gems / total_heroes) if total_heroes > 0 else 0
     total_nominations = len(filtered_df)
-    
+
     kpi1, kpi2, kpi3, kpi4 = st.columns(4)
-    
+
     with kpi1:
         st.metric("🛡️ Heróis Reconhecidos", total_heroes)
     with kpi2:
@@ -505,10 +562,10 @@ def pagina_salao_dos_herois():
     with col_left:
         # Feed de Reconhecimento com imagens dos pilares
         st.markdown("### 📜 **Feed de Reconhecimento**")
-        
+
         with st.container(height=400, border=True):
             feed_data = filtered_df.sort_values('data_submissao', ascending=False).head(10)
-            
+
             for _, row in feed_data.iterrows():
                 pillar_icon = display_pillar_icon(row['pillar'])
                 st.markdown(f"""
@@ -524,13 +581,13 @@ def pagina_salao_dos_herois():
 
         # Ranking dos Pilares com gráfico
         st.markdown("### 🏛️ **Pilares da Jornada**")
-        
+
         pillar_data = filtered_df.groupby('pillar')['GemsAwarded'].sum().sort_values(ascending=False)
-        
+
         if not pillar_data.empty:
             # Paleta de cores clean para o gráfico
             colors = ['#6B7E7D', '#A8A8A8', '#D4A574', '#B07A57', '#7FB069']
-            
+
             fig_pillar = px.pie(
                 values=pillar_data.values,
                 names=pillar_data.index,
@@ -548,12 +605,12 @@ def pagina_salao_dos_herois():
     with col_right:
         # Ranking dos Heróis
         st.markdown("### 🏆 **Ranking dos Heróis**")
-        
+
         # Preparação dos dados para ranking
         hero_ranking = filtered_df.groupby(['Herói', 'Time'])['GemsAwarded'].sum().reset_index()
         hero_ranking = hero_ranking.sort_values('GemsAwarded', ascending=False).reset_index(drop=True)
         hero_ranking.index = hero_ranking.index + 1
-        
+
         # Adicionar medalhas para o top 3
         def add_medals(position):
             if position == 1:
@@ -564,9 +621,9 @@ def pagina_salao_dos_herois():
                 return "🥉"
             else:
                 return f"{position}º"
-        
+
         hero_ranking['Posição'] = hero_ranking.index.map(add_medals)
-        
+
         # Pivot para pilares
         pivot_pillars = filtered_df.pivot_table(
             index='Herói', 
@@ -574,9 +631,9 @@ def pagina_salao_dos_herois():
             values='GemsAwarded', 
             aggfunc='sum'
         ).fillna(0).astype(int)
-        
+
         final_ranking = hero_ranking.merge(pivot_pillars, on='Herói', how='left').fillna(0)
-        
+
         # Configuração da tabela
         column_config = {
             "GemsAwarded": st.column_config.ProgressColumn(
@@ -586,14 +643,14 @@ def pagina_salao_dos_herois():
                 max_value=int(final_ranking['GemsAwarded'].max()) if len(final_ranking) > 0 else 100,
             ),
         }
-        
+
         # Adicionar configuração para colunas de pilares
         for col in pivot_pillars.columns:
             column_config[col] = st.column_config.NumberColumn(
                 f"🏛️ {col}",
                 format="%d 💎"
             )
-        
+
         st.dataframe(
             final_ranking,
             use_container_width=True,
@@ -608,14 +665,14 @@ def pagina_mapa_dos_cristais():
         "A jornada de um herói é pavimentada com grandes feitos",
         "🗺️"
     )
-    
+
     df_map = load_data('map')
     if df_map.empty:
         st.warning("O Mapa dos Cristais ainda não foi definido.", icon="⚠️")
         return
 
     pilares = df_map['pillar'].dropna().unique()
-    
+
     for pilar in pilares:
         col_img, col_title = st.columns([1, 5], vertical_alignment="center")
 
@@ -636,7 +693,7 @@ def pagina_mapa_dos_cristais():
             else:
                 for _, row in df_pilar.iterrows():
                     gems = int(pd.to_numeric(row['GemsAwarded'], errors='coerce'))
-                    
+
                     # Card da missão com imagem
                     pillar_icon = display_pillar_icon(pilar, "50px")
                     st.markdown(f"""
@@ -665,7 +722,7 @@ def pagina_pergaminho_de_nomeacoes():
 
     df_herois = load_data('hero')
     df_map = load_data('map')
-    
+
     if df_herois.empty or df_map.empty:
         st.error("É necessário ter ao menos um herói e uma missão cadastrados para fazer uma nomeação.", icon="🚨")
         return
@@ -673,7 +730,7 @@ def pagina_pergaminho_de_nomeacoes():
     # Seção 1: Seleção de Heróis
     st.markdown("### 👥 **Passo 1: Selecione os Heróis**")
     col1, col2 = st.columns(2)
-    
+
     with col1:
         nomeador = st.selectbox(
             "🛡️ Seu Nome de Herói (Nomeador)", 
@@ -682,7 +739,7 @@ def pagina_pergaminho_de_nomeacoes():
             placeholder="Selecione seu nome",
             help="Escolha seu nome da lista de heróis cadastrados"
         )
-    
+
     with col2:
         # Filtrar heróis para não incluir o nomeador
         available_heroes = df_herois[df_herois['hero_name'] != nomeador]['hero_name'].tolist() if nomeador else df_herois['hero_name'].tolist()
@@ -696,7 +753,7 @@ def pagina_pergaminho_de_nomeacoes():
 
     # Seção 2: Especificação do Feito
     st.markdown("### 🎯 **Passo 2: Especifique o Feito**")
-    
+
     pilar = st.selectbox(
         "🏛️ Pilar", 
         options=df_map['pillar'].dropna().unique(),
@@ -709,7 +766,7 @@ def pagina_pergaminho_de_nomeacoes():
     missao = None
     if pilar:
         missoes_do_pilar = df_map[df_map['pillar'] == pilar]
-        
+
         if not missoes_do_pilar.empty:
             # Mostrar preview das missões disponíveis com ícones
             st.markdown("**💡 Missões disponíveis neste pilar:**")
@@ -722,7 +779,7 @@ def pagina_pergaminho_de_nomeacoes():
                     <span><strong>{mission_row['mission_name']}</strong> - {gems} GEMS 💎</span>
                 </div>
                 """, unsafe_allow_html=True)
-            
+
             # Selectbox para missão
             missao = st.selectbox(
                 "Feito/Missão Realizada", 
@@ -765,7 +822,7 @@ def pagina_pergaminho_de_nomeacoes():
         help="Seja específico sobre o que o herói fez e por que merece o reconhecimento",
         height=120
     )
-    
+
     anexo = st.file_uploader(
         "📎 Anexar Evidência (Opcional)", 
         help="Anexe um print, documento ou qualquer arquivo que comprove o feito",
@@ -776,17 +833,17 @@ def pagina_pergaminho_de_nomeacoes():
     validation_msgs = []
     if nomeador and nomeado and nomeador == nomeado:
         validation_msgs.append("⚠️ Um herói não pode nomear a si mesmo!")
-    
+
     if validation_msgs:
         for msg in validation_msgs:
             st.warning(msg)
 
     st.divider()
-    
+
     # Verificar se todos os campos obrigatórios estão preenchidos
     campos_obrigatorios = [nomeador, nomeado, pilar, missao, justificativa.strip() if justificativa else ""]
     todos_preenchidos = all(campos_obrigatorios) and not validation_msgs
-    
+
     if st.button(
         "Enviar Nomeação", 
         use_container_width=True, 
@@ -803,6 +860,7 @@ def pagina_pergaminho_de_nomeacoes():
                 caminho_anexo_salvo = ANEXOS_DIR / nome_arquivo
                 with open(caminho_anexo_salvo, "wb") as f: 
                     f.write(anexo.getbuffer())
+                logger.info(f"Anexo salvo: {caminho_anexo_salvo}")
 
             id_nomeador = df_herois.loc[df_herois['hero_name'] == nomeador, 'id_hero'].iloc[0]
             id_nomeado = df_herois.loc[df_herois['hero_name'] == nomeado, 'id_hero'].iloc[0]
@@ -822,6 +880,7 @@ def pagina_pergaminho_de_nomeacoes():
             df_atualizado = pd.concat([df_nomeacoes, pd.DataFrame([new_row])], ignore_index=True)
             if save_data('nomination', df_atualizado):
                 st.success(f"🎉 Nomeação de **'{nomeado}'** enviada com sucesso!")
+                logger.info(f"Nova nomeação criada: ID {novo_id}, Nomeador: {nomeador}, Nomeado: {nomeado}")
                 create_success_animation()
                 time.sleep(2)
                 st.rerun()
@@ -846,7 +905,7 @@ def pagina_aprovacao_da_nomeacao():
     mapa_missoes = df_missoes.set_index('id_mission')[['mission_name', 'pillar']]
     df_nomeacoes['nomeador'] = df_nomeacoes['id_nomeador'].map(mapa_herois).fillna("?")
     df_nomeacoes['nomeado'] = df_nomeacoes['id_nomeado'].map(mapa_herois).fillna("?")
-    
+
     # Merge com informações da missão
     df_enriched = df_nomeacoes.merge(
         mapa_missoes, 
@@ -862,7 +921,7 @@ def pagina_aprovacao_da_nomeacao():
     pendentes = len(df_enriched[df_enriched['status'].str.strip().str.lower() == 'pendente'])
     aprovadas = len(df_enriched[df_enriched['status'].str.strip().str.lower() == 'aprovado'])
     reprovadas = len(df_enriched[df_enriched['status'].str.strip().str.lower() == 'reprovado'])
-    
+
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("📝 Total", total_nomeacoes)
     col2.metric("⏳ Pendentes", pendentes)
@@ -879,14 +938,14 @@ def pagina_aprovacao_da_nomeacao():
 
     with tab_pend:
         pendentes_df = df_enriched[df_enriched['status'].str.strip().str.lower() == 'pendente']
-        
+
         if pendentes_df.empty:
             st.success("✨ Não há nomeações pendentes para avaliação.")
         else:
             for _, row in pendentes_df.iterrows():
                 with st.container(border=True):
                     col_info, col_actions = st.columns([3, 1])
-                    
+
                     with col_info:
                         pillar_icon = display_pillar_icon(row['pillar'], "30px")
                         st.markdown(f"""
@@ -898,10 +957,10 @@ def pagina_aprovacao_da_nomeacao():
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
-                        
+
                         with st.expander("📋 Ver Detalhes Completos"):
                             st.info(f"**Justificativa:**\n{row['justificativa']}")
-                            
+
                             if pd.notna(row['caminho_anexo']) and Path(row['caminho_anexo']).exists():
                                 with open(row['caminho_anexo'], "rb") as file:
                                     st.download_button(
@@ -909,23 +968,25 @@ def pagina_aprovacao_da_nomeacao():
                                         file, 
                                         Path(row['caminho_anexo']).name
                                     )
-                    
+
                     with col_actions:
                         id_nom = row['id_nomeacao']
-                        
+
                         if st.button("✅ Aprovar", key=f"aprovar_{id_nom}", use_container_width=True):
                             with st.spinner("Aprovando..."):
                                 df_nomeacoes.loc[df_nomeacoes['id_nomeacao'] == id_nom, 'status'] = 'Aprovado'
                                 if save_data('nomination', df_nomeacoes): 
                                     st.success("Nomeação aprovada!")
+                                    logger.info(f"Nomeação {id_nom} aprovada")
                                     time.sleep(1)
                                     st.rerun()
-                        
+
                         if st.button("❌ Reprovar", key=f"reprovar_{id_nom}", use_container_width=True, type="secondary"):
                             with st.spinner("Reprovando..."):
                                 df_nomeacoes.loc[df_nomeacoes['id_nomeacao'] == id_nom, 'status'] = 'Reprovado'
                                 if save_data('nomination', df_nomeacoes): 
                                     st.success("Nomeação reprovada!")
+                                    logger.info(f"Nomeação {id_nom} reprovada")
                                     time.sleep(1)
                                     st.rerun()
 
@@ -959,14 +1020,14 @@ def pagina_aprovacao_da_nomeacao():
                 hide_index=True
             )
 
-# --- 7. PÁGINAS ADMINISTRATIVAS ---
+# --- 8. PÁGINAS ADMINISTRATIVAS ---
 def pagina_admin_herois():
     create_custom_header(
         "Gestão de Heróis",
         "Administração de heróis do programa",
         "🔑"
     )
-    
+
     df_herois = load_data('hero')
 
     if 'hero_to_edit_id' in st.session_state:
@@ -974,17 +1035,17 @@ def pagina_admin_herois():
         hero_data = df_herois[df_herois['id_hero'] == hero_id].iloc[0]
 
         st.markdown(f"### ✏️ **Editando Herói: _{hero_data['hero_name']}_**")
-        
+
         with st.form("edit_hero_form"):
             col1, col2 = st.columns(2)
-            
+
             with col1:
                 hero_name = st.text_input("🛡️ Nome do Herói", value=hero_data['hero_name'])
             with col2:
                 hero_team = st.text_input("👥 Time do Herói", value=hero_data['hero_team'])
 
             col_save, col_cancel = st.columns(2)
-            
+
             with col_save:
                 submitted = st.form_submit_button("💾 Salvar Alterações", type="primary", use_container_width=True)
             with col_cancel:
@@ -1004,6 +1065,7 @@ def pagina_admin_herois():
                         ]
                         if save_data('hero', df_herois):
                             st.success("🎉 Herói atualizado com sucesso!")
+                            logger.info(f"Herói {hero_id} atualizado: {hero_name}")
                             del st.session_state['hero_to_edit_id']
                             time.sleep(1)
                             st.rerun()
@@ -1012,7 +1074,7 @@ def pagina_admin_herois():
         with st.expander("➕ **Cadastrar Novo Herói**", expanded=df_herois.empty):
             with st.form("add_hero_form", clear_on_submit=True):
                 col1, col2 = st.columns(2)
-                
+
                 with col1:
                     hero_name = st.text_input("🛡️ Nome do Novo Herói", placeholder="Ex: João Silva")
                 with col2:
@@ -1037,15 +1099,16 @@ def pagina_admin_herois():
                             df_updated = pd.concat([df_herois, pd.DataFrame([new_row])], ignore_index=True)
                             if save_data('hero', df_updated):
                                 st.success(f"🎉 Herói '{hero_name}' cadastrado com sucesso!")
+                                logger.info(f"Novo herói cadastrado: {hero_name} (ID: {new_id})")
                                 create_success_animation()
                                 time.sleep(1)
                                 st.rerun()
 
         st.divider()
-        
+
         # Lista de heróis existentes
         st.markdown("### 🛡️ **Heróis Existentes**")
-        
+
         if df_herois.empty:
             st.info("👤 Nenhum herói cadastrado ainda.")
         else:
@@ -1054,34 +1117,35 @@ def pagina_admin_herois():
             col1.metric("👥 Total de Heróis", len(df_herois))
             col2.metric("🏢 Times Únicos", df_herois['hero_team'].nunique())
             col3.metric("📅 Cadastros Hoje", len(df_herois[df_herois['start_date'] == date.today().strftime("%Y-%m-%d")]))
-            
+
             st.markdown("---")
-            
+
             # Filtro por time
             all_teams = ['Todos'] + sorted(df_herois['hero_team'].unique().tolist())
             selected_team = st.selectbox("🏢 Filtrar por Time", all_teams)
-            
+
             filtered_heroes = df_herois if selected_team == 'Todos' else df_herois[df_herois['hero_team'] == selected_team]
-            
+
             for index, row in filtered_heroes.iterrows():
                 with st.container(border=True):
                     col_info, col_actions = st.columns([3, 1])
-                    
+
                     with col_info:
                         st.markdown(f"### 🛡️ **{row['hero_name']}**")
                         st.markdown(f"**👥 Time:** {row['hero_team']}")
                         st.caption(f"🆔 ID: {row['id_hero']} | 📅 Criado: {row.get('start_date', 'N/A')}")
-                    
+
                     with col_actions:
                         if st.button("✏️ Editar", key=f"edit_hero_{row['id_hero']}", use_container_width=True):
                             st.session_state['hero_to_edit_id'] = row['id_hero']
                             st.rerun()
-                        
+
                         if st.button("🗑️ Excluir", key=f"del_hero_{row['id_hero']}", type="secondary", use_container_width=True):
                             if show_loading_message("Excluindo herói..."):
                                 df_herois.drop(index, inplace=True)
                                 if save_data('hero', df_herois):
                                     st.success("🗑️ Herói excluído!")
+                                    logger.info(f"Herói excluído: {row['hero_name']} (ID: {row['id_hero']})")
                                     time.sleep(1)
                                     st.rerun()
 
@@ -1091,19 +1155,19 @@ def pagina_admin_missoes():
         "Gerencie as missões e recompensas do programa",
         "🔑"
     )
-    
+
     df_map = load_data('map')
 
     if 'mission_to_edit_id' in st.session_state:
         mission_id = st.session_state['mission_to_edit_id']
         mission_data = df_map[df_map['id_mission'] == mission_id].iloc[0]
-        
+
         st.markdown(f"### ✏️ **Editando Missão: _{mission_data['mission_name']}_**")
-        
+
         with st.form("edit_mission_form"):
             mission_name = st.text_input("Missão", value=mission_data['mission_name'])
             mission_discribe = st.text_area("📝 Descrição", value=mission_data['mission_discribe'], height=100)
-            
+
             col1, col2 = st.columns(2)
             with col1:
                 gems = st.number_input("💎 Recompensa em GEMS", min_value=1, step=1, value=int(pd.to_numeric(mission_data['GemsAwarded'])))
@@ -1111,7 +1175,7 @@ def pagina_admin_missoes():
                 pillar = st.text_input("🏛️ Pilar Associado", value=mission_data['pillar'])
 
             col_save, col_cancel = st.columns(2)
-            
+
             with col_save:
                 submitted = st.form_submit_button("💾 Salvar Alterações", type="primary", use_container_width=True)
             with col_cancel:
@@ -1132,6 +1196,7 @@ def pagina_admin_missoes():
                         df_map.loc[df_map['id_mission'] == mission_id, update_cols] = update_values
                         if save_data('map', df_map):
                             st.success("🎉 Missão atualizada com sucesso!")
+                            logger.info(f"Missão {mission_id} atualizada: {mission_name}")
                             del st.session_state['mission_to_edit_id']
                             time.sleep(1)
                             st.rerun()
@@ -1141,7 +1206,7 @@ def pagina_admin_missoes():
             with st.form("add_mission_form", clear_on_submit=True):
                 mission_name = st.text_input("Nome da Nova Missão", placeholder="Ex: Implementação de Melhoria")
                 mission_discribe = st.text_area("📝 Descrição", placeholder="Descreva a missão em detalhes...", height=100)
-                
+
                 col1, col2 = st.columns(2)
                 with col1:
                     gems = st.number_input("💎 Recompensa em GEMS", min_value=1, step=1, value=10)
@@ -1176,15 +1241,16 @@ def pagina_admin_missoes():
                             df_updated = pd.concat([df_map, pd.DataFrame([new_data])], ignore_index=True)
                             if save_data('map', df_updated):
                                 st.success(f"🎉 Missão '{mission_name}' cadastrada com sucesso!")
+                                logger.info(f"Nova missão cadastrada: {mission_name} (ID: {new_id_mission})")
                                 create_success_animation()
                                 time.sleep(1)
                                 st.rerun()
 
         st.divider()
-        
+
         # Lista de missões existentes
         st.markdown("### **Missões Existentes**")
-        
+
         if df_map.empty:
             st.info("📝 Nenhuma missão cadastrada ainda.")
         else:
@@ -1193,34 +1259,34 @@ def pagina_admin_missoes():
             total_gems = df_map['GemsAwarded'].astype(int).sum()
             avg_gems = int(total_gems / total_missions) if total_missions > 0 else 0
             unique_pillars = df_map['pillar'].nunique()
-            
+
             col1, col2, col3, col4 = st.columns(4)
             col1.metric("Total de Missões", total_missions)
             col2.metric("💎 Total de GEMS", f"{total_gems:,}".replace(",", "."))
             col3.metric("📊 Média de GEMS", avg_gems)
             col4.metric("🏛️ Pilares", unique_pillars)
-            
+
             st.markdown("---")
-            
+
             # Filtro por pilar
             all_pillars = ['Todos'] + sorted(df_map['pillar'].unique().tolist())
             selected_pillar = st.selectbox("🏛️ Filtrar por Pilar", all_pillars)
-            
+
             filtered_missions = df_map if selected_pillar == 'Todos' else df_map[df_map['pillar'] == selected_pillar]
-            
+
             # Organizar por pilar
             for pilar in filtered_missions['pillar'].unique():
                 st.markdown(f"#### **{pilar}**")
                 pilar_missions = filtered_missions[filtered_missions['pillar'] == pilar]
-                
+
                 for index, row in pilar_missions.iterrows():
                     with st.container(border=True):
                         col_info, col_actions = st.columns([3, 1])
-                        
+
                         with col_info:
                             gems = int(pd.to_numeric(row['GemsAwarded']))
                             pillar_icon = display_pillar_icon(pilar, "40px")
-                            
+
                             st.markdown(f"""
                             <div style="display: flex; align-items: center; gap: 1rem;">
                                 {pillar_icon}
@@ -1231,72 +1297,78 @@ def pagina_admin_missoes():
                                 </div>
                             </div>
                             """, unsafe_allow_html=True)
-                            
+
                             with st.expander("📝 Ver Descrição"):
                                 st.write(row['mission_discribe'])
-                        
+
                         with col_actions:
                             if st.button("✏️ Editar", key=f"edit_mission_{row['id_mission']}", use_container_width=True):
                                 st.session_state['mission_to_edit_id'] = row['id_mission']
                                 st.rerun()
-                            
+
                             if st.button("🗑️ Excluir", key=f"del_mission_{row['id_mission']}", type="secondary", use_container_width=True):
                                 if show_loading_message("Excluindo missão..."):
                                     df_map.drop(index, inplace=True)
                                     if save_data('map', df_map):
                                         st.success("🗑️ Missão excluída!")
+                                        logger.info(f"Missão excluída: {row['mission_name']} (ID: {row['id_mission']})")
                                         time.sleep(1)
                                         st.rerun()
-                
+
                 st.markdown("---")
 
-# --- 8. LÓGICA DE NAVEGAÇÃO E AUTENTICAÇÃO ---
-st.sidebar.markdown("### 💎 **Navegação**")
-st.sidebar.divider()
+# --- 9. LÓGICA DE NAVEGAÇÃO E AUTENTICAÇÃO ---
+if __name__ == "__main__":
+    st.sidebar.markdown("### 💎 **Navegação**")
+    st.sidebar.divider()
 
-# Estado de administrador
-if 'is_admin' not in st.session_state:
-    st.session_state.is_admin = False
+    # Estado de administrador
+    if 'is_admin' not in st.session_state:
+        st.session_state.is_admin = False
 
-# Campo de senha estilizado
-password = st.sidebar.text_input("🔑 Senha de Administrador", type="password")
-if password == ADMIN_PASSWORD:
-    st.session_state.is_admin = True
-    st.sidebar.success("🔓 Acesso liberado!")
-elif password:
-    st.sidebar.error("❌ Senha incorreta.")
+    # Campo de senha estilizado
+    password = st.sidebar.text_input("🔑 Senha de Administrador", type="password")
+    if password == ADMIN_PASSWORD:
+        st.session_state.is_admin = True
+        st.sidebar.success("🔓 Acesso liberado!")
+    elif password:
+        st.sidebar.error("❌ Senha incorreta.")
 
-st.sidebar.divider()
+    st.sidebar.divider()
 
-# Páginas disponíveis
-PAGES = {
-    "Home": ("🏠", pagina_home, False),
-    "Salão dos Heróis": ("⚔️", pagina_salao_dos_herois, False),
-    "Mapa dos Cristais": ("🗺️", pagina_mapa_dos_cristais, False),
-    "Pergaminho de Nomeações": ("📜", pagina_pergaminho_de_nomeacoes, False),
-    "Aprovação da Nomeação": ("👑", pagina_aprovacao_da_nomeacao, True),
-    "Gestão de Heróis": ("🔑", pagina_admin_herois, True),
-    "Administração de Missões": ("🔑", pagina_admin_missoes, True),
-}
+    # Páginas disponíveis
+    PAGES = {
+        "Home": ("🏠", pagina_home, False),
+        "Salão dos Heróis": ("⚔️", pagina_salao_dos_herois, False),
+        "Mapa dos Cristais": ("🗺️", pagina_mapa_dos_cristais, False),
+        "Pergaminho de Nomeações": ("📜", pagina_pergaminho_de_nomeacoes, False),
+        "Aprovação da Nomeação": ("👑", pagina_aprovacao_da_nomeacao, True),
+        "Gestão de Heróis": ("🔑", pagina_admin_herois, True),
+        "Administração de Missões": ("🔑", pagina_admin_missoes, True),
+    }
 
-if 'current_page' not in st.session_state:
-    st.session_state.current_page = "Home"
+    if 'current_page' not in st.session_state:
+        st.session_state.current_page = "Home"
 
-# Navegação melhorada
-for name, (icon, _, needs_admin) in PAGES.items():
-    if not needs_admin or st.session_state.is_admin:
-        # Destacar página atual
-        button_type = "primary" if st.session_state.current_page == name else "secondary"
-        
-        if st.sidebar.button(f"{icon} {name}", use_container_width=True, type=button_type):
-            st.session_state.current_page = name
-            st.rerun()
+    # Navegação melhorada
+    for name, (icon, _, needs_admin) in PAGES.items():
+        if not needs_admin or st.session_state.is_admin:
+            # Destacar página atual
+            button_type = "primary" if st.session_state.current_page == name else "secondary"
 
-# Executar página selecionada
-page_function = PAGES[st.session_state.current_page][1]
-page_function()
+            if st.sidebar.button(f"{icon} {name}", use_container_width=True, type=button_type):
+                st.session_state.current_page = name
+                st.rerun()
 
-# Footer
-st.sidebar.markdown("---")
-st.sidebar.markdown("*Programa +GEMS v2.0*")
+    # Executar página selecionada
+    page_function = PAGES[st.session_state.current_page][1]
+    page_function()
 
+    # Footer
+    st.sidebar.markdown("---")
+    app_title = os.getenv("APP_TITLE", "Programa +GEMS")
+    st.sidebar.markdown(f"*{app_title} v2.0*")
+    
+    if DEBUG:
+        st.sidebar.markdown("🔧 **Debug Mode**")
+        st.sidebar.text(f"Environment: {os.getenv('ENVIRONMENT', 'development')}")

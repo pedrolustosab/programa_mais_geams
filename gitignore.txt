@@ -119,8 +119,12 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
-# Environments
+# Environments - VARIÁVEIS DE AMBIENTE SENSÍVEIS
 .env
+.env.local
+.env.development
+.env.test
+.env.production
 .venv
 env/
 venv/
@@ -168,10 +172,19 @@ cython_debug/
 *.xlsx
 *.json
 anexos/
+data/
 
 # Arquivos de configuração local
 config.py
 secrets.toml
 
-# Logs do Streamlit
+# Logs do Streamlit e da aplicação
 .streamlit/
+*.log
+logs/
+
+# Arquivos temporários
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
