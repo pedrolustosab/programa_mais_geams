@@ -8,19 +8,12 @@ sys.path.append(str(BASE_DIR))
 
 from utils.config import setup_page_config, apply_custom_styles
 from utils.data_manager import initialize_session_state
-
-# Importação alternativa mais robusta
-try:
-    from pages import (
-        home, salao_herois, mapa_cristais, pergaminho_nomeacoes,
-        aprovacao_nomeacao, admin_herois, admin_missoes
-    )
-except ImportError as e:
-    st.error(f"Erro ao importar páginas: {e}")
-    st.stop()
+from pages import (
+    home, salao_herois, mapa_cristais, pergaminho_nomeacoes,
+    aprovacao_nomeacao, admin_herois, admin_missoes
+)
 
 def main():
-    """Função principal da aplicação"""
     # Configuração inicial
     setup_page_config()
     apply_custom_styles()
@@ -55,9 +48,8 @@ def create_navigation_sidebar():
     
     # Criar botões de navegação
     for name, (icon, _, needs_admin) in PAGES.items():
-        if not needs_admin or st.session_state.get('is_admin', False):
-            current_page = st.session_state.get('current_page', 'Home')
-            button_type = "primary" if current_page == name else "secondary"
+        if not needs_admin or st.session_state.is_admin:
+            button_type = "primary" if st.session_state.current_page == name else "secondary"
             
             if st.sidebar.button(f"{icon} {name}", use_container_width=True, type=button_type):
                 st.session_state.current_page = name
@@ -91,14 +83,7 @@ def execute_current_page():
     
     current_page = st.session_state.get('current_page', 'Home')
     page_function = PAGES.get(current_page, home.show_page)
-    
-    try:
-        page_function()
-    except Exception as e:
-        st.error(f"Erro ao carregar a página: {e}")
-        st.info("Redirecionando para a página inicial...")
-        st.session_state.current_page = 'Home'
-        home.show_page()
+    page_function()
     
     # Footer
     create_footer()
@@ -109,10 +94,6 @@ def create_footer():
     from utils.config import APP_TITLE, DEBUG
     st.sidebar.markdown(f"{APP_TITLE} v2.0")
     
-    if DEBUG:
-        import os
-        st.sidebar.markdown("🔧 **Debug Mode**")
-        st.sidebar.text(f"Environment: {os.getenv('ENVIRONMENT', 'development')}")
 
 if __name__ == "__main__":
     main()
