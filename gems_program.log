@@ -352,3 +352,11 @@
 2025-09-22 16:35:18,340 - INFO - Anexo salvo: anexos\18_C-level.pdf
 2025-09-22 16:35:18,352 - INFO - Dados salvos em fact_nomeacao.csv: 18 registros
 2025-09-22 16:35:18,354 - INFO - Nova nomeação criada: ID 18, Nomeador: Thiago, Nomeado: Carlos
+2025-09-22 16:49:01,108 - WARNING - Imagem do pilar não encontrada: C:\Users\G3NX\Documents\programa_mais_geams\assets\pillar_icons\os_picos_da_entrega_extraordinária.png
+2025-09-22 16:50:48,119 - INFO - Anexo salvo: anexos\19_Fundo Padrão - 3 de 3 (2).png
+2025-09-22 16:50:48,149 - INFO - Dados salvos em fact_nomeacao.csv: 19 registros
+2025-09-22 16:50:48,152 - INFO - Nova nomeação criada: ID 19, Nomeador: Thiago, Nomeado: Juliana Campiolo
+2025-09-22 16:51:06,760 - INFO - Dados salvos em fact_nomeacao.csv: 19 registros
+2025-09-22 16:51:06,763 - INFO - Nomeação 18 aprovado
+2025-09-22 16:51:09,943 - INFO - Dados salvos em fact_nomeacao.csv: 19 registros
+2025-09-22 16:51:09,946 - INFO - Nomeação 19 aprovado
